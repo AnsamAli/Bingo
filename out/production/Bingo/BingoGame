@@ -1,0 +1,19 @@
+A Bingo board contains 25 spaces with 1 free space
+The spaces have a unique id which is an int from 1 to 75
+The player/ client is assigned 24 random spaces that are all unmarked
+There are at least 2 players
+Server distributes the spaces, saves the spaces into cards and displays them randomly 1 by 1
+if the player has the spaces specified by the card, mark that space.
+
+Bingo is achieved:
+horizontally: 5 cards of the same row number
+vertically:  5 cards of the same column letter
+diagonally: [column, row]: {[0, 0] [1, 1] [2, 2] [3,3] [4,4]} or
+                           {[0, 4] [1, 3] [2, 2] [3, 1] [4,0]}
+Client server protocol:
+Game begins when client asks for board from server
+server generates board for player and saves the player into a list, saves each board spaces as a card.
+When all the players are registered, server prints out individual cards.
+
+Game ends when any user declares "Bingo"
+Dealer is in charge of assuring that the player does indeed have bingo.

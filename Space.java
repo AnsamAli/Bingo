@@ -16,9 +16,37 @@ public class Space {
         this.marked = marked;
     }
 
-    public String toString() {
-        return "column: " + column + ", row: " + row + " id: " + id + " marked?: " + marked;
+    /**
+     * marks this space
+     * EFFECT: set the given space from unmarked to marked
+     */
+    public void markSpace() {
+        this.marked = true;
     }
+
+    @Override
+   public String toString() {
+        return "column: " + column + ", row: " + row + ", id: " + id + ", marked?: " + marked;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        Space s1 = (Space) o;
+        Space s2 = (Space) o;
+        return s1.column == s2.column &&
+            s1.row == s2.row &&
+            s1.id == s2.id &&
+            s1.marked == s2.marked;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.parseInt(this.toString());
+    }
+
 
 
 

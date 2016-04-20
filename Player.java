@@ -10,7 +10,6 @@ public class Player {
     }
 
     /**
-     *
      * @return whether or not the players board has the qualifications for bingo
      */
     boolean hasBingo() {
@@ -18,7 +17,7 @@ public class Player {
     }
 
     /**
-     * @return whether or not the player's board has any horizontal bingos
+     * @return whether or not the player's board has a horizontal bingo
      */
     public boolean horizontalBingo() {
         boolean bingo = false;
@@ -30,7 +29,9 @@ public class Player {
         }
         return bingo;
      }
-    //TODO abstract with above into one method
+    /**
+     * @return whether or not the player's board has a vertical bingo
+     */
     public boolean verticalBingo() {
         boolean bingo = false;
         for (int i = 0; i < 5; i++) {
@@ -43,7 +44,7 @@ public class Player {
     }
 
     /**
-     * @return whether or not the player has a horizontal bingo
+     * @return whether or not the player has a diagonal bingo
      */
     public boolean diagonalBingo() {
         boolean bingo;

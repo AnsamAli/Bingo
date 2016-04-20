@@ -11,8 +11,7 @@ public class Dealer {
      * @return whether or not the player has bingo
      */
     public boolean playerHasBingo(Player allegedWinner) {
-        //return allegedWinner.board
-        return false;
+        return allegedWinner.hasBingo();
     }
 
 
