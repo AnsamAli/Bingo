@@ -1,4 +1,7 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -8,29 +11,62 @@ import java.net.Socket;
  */
 public class BingoServer {
 
+    static ServerSocket socket;
+    private static final int port = 9001;
+
+
+    /**
+     * Listens to the port and creates threads
+     */
     public static void main(String[] args) throws IOException {
         System.out.println("Bingo server is starting up...");
-        ServerSocket socket = new ServerSocket(9898);
+        socket = new ServerSocket(port);
+
         try {
-
-        } catch (Exception e) {
-
+            while (true) {
+                new GameHandler(socket.accept()).start();
+            }
+        } finally {
+            socket.close();
         }
+
     }
 
-
-    private static class BingoListener extends Thread {
+    /**
+     *  A handler thread class.  Handlers are spawned from the listening
+     * loop and are responsible for a dealing with a single client
+     * and broadcasting its messages.
+     */
+    static class GameHandler extends Thread {
         private Socket socket;
-        private int clientNumber;
+        private BufferedReader reader;
+        private PrintWriter writer;
 
-        private BingoListener(Socket socket, int clientNumber) {
+        public GameHandler(Socket socket) {
             this.socket = socket;
-            this.clientNumber = clientNumber;
         }
-    }
 
-    public void run() {
-        
+
+        /**
+         * runs the game using the Bingo protocol
+         */
+        public void run(){
+            try {
+                reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                writer = new PrintWriter(socket.getOutputStream());
+                String line = reader.readLine();
+                if (line.equalsIgnoreCase("sign-up")) {
+                    //send "Welcome" message
+                    System.out.println("Received sign-up");
+                    writer.println("Welcome! Let's play bingo!");
+                }
+
+
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 
 }
