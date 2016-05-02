@@ -16,13 +16,8 @@ public class Space {
         this.marked = marked;
     }
 
-    /**
-     * marks this space
-     * EFFECT: set the given space from unmarked to marked
-     */
-    public void markSpace() {
-        this.marked = true;
-    }
+
+
 
     @Override
    public String toString() {

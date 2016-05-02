@@ -1,7 +1,7 @@
 /**
  * constants that are used throughout the game
  */
-public class GameConstants {
+public interface GameConstants {
 
     public final int BOARD_SIZE = 5;
 
