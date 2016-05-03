@@ -28,10 +28,15 @@ The player/client is assigned 24 random spaces that are all unmarked
 There are at least 2 players
 BingoServer distributes the spaces, saves the spaces into cards and displays them randomly 1 by 1
 The numbers in the B column are between 1 and 15, 
+
 in the I column between 16 and 30, 
+
 in the N column between 31 and 45 plus a free space in the second row,
+
 in the G column between 46 and 60, and
+
 in the O column between 61 and 75.
+
 if the player has the spaces specified by the card, mark that space.
 
 Bingo is achieved:
