@@ -1,13 +1,15 @@
+package bingo;
+
 /**
  * represents a space on the the bingo board
  * identified by it's column [b, i, n, g, and o] and its id.
  * location is determined by the column and row
  */
 public class Space {
-   int column;
-    int row;
-    int id;
-    boolean marked;
+    public int column;
+    public int row;
+    public int id;
+    public boolean marked;
 
     Space(int column, int row, int id, boolean marked) {
         this.column = column;
@@ -15,9 +17,6 @@ public class Space {
         this.id = id;
         this.marked = marked;
     }
-
-
-
 
     @Override
    public String toString() {
