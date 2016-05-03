@@ -22,11 +22,16 @@ Player
 
 
 ## Game Rules 
-A Bingo board contains 25 spaces with 1 free space
+A Bingo board contains 25 spaces with 1 free space.
 The spaces have a unique id which is an int from 1 to 75
-The player/ client is assigned 24 random spaces that are all unmarked
+The player/client is assigned 24 random spaces that are all unmarked
 There are at least 2 players
 BingoServer distributes the spaces, saves the spaces into cards and displays them randomly 1 by 1
+The numbers in the B column are between 1 and 15, 
+in the I column between 16 and 30, 
+in the N column between 31 and 45 plus a free space in the second row,
+in the G column between 46 and 60, and
+in the O column between 61 and 75.
 if the player has the spaces specified by the card, mark that space.
 
 Bingo is achieved:
@@ -35,8 +40,7 @@ vertically:  5 cards of the same column letter
 diagonally: [column, row]: {[0, 0] [1, 1] [2, 2] [3,3] [4,4]} or
                            {[0, 4] [1, 3] [2, 2] [3, 1] [4,0]}
 
-The numbers in the B column are between 1 and 15, in the I column between 16 and 30, in the N column
-(containing four numbers and the free space) between 31 and 45, in the G column between 46 and 60, and
-in the O column between 61 and 75.
+Cheating occurs if the user marks a space that was not drawn or declares bingo when they do not have it. 
+Cheaters are removed from the game. 
 
 
