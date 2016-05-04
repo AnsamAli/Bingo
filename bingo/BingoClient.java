@@ -1,6 +1,5 @@
 package bingo;
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,7 +14,7 @@ public class BingoClient {
     BufferedReader reader;
     PrintWriter writer;
 
-   BoardGui boardGui = new BoardGui();
+  Dealer dealer = new Dealer();
 
 
     /**
@@ -37,8 +36,7 @@ public class BingoClient {
      */
     public static void main(String[] args) throws Exception {
         BingoClient client = new BingoClient();
-        client.boardGui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        client.boardGui.setUpBoard();
+        client.dealer.makeBoardGui();
         client.run();
     }
 }
