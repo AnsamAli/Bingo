@@ -11,11 +11,15 @@ public class Space {
     public int id;
     public boolean marked;
 
-    Space(int column, int row, int id, boolean marked) {
+    public Space(int column, int row, int id, boolean marked) {
         this.column = column;
         this.row = row;
         this.id = id;
         this.marked = marked;
+    }
+
+    public void mark() {
+        this.marked = true;
     }
 
     @Override

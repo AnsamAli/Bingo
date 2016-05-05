@@ -9,6 +9,9 @@ import java.util.Random;
  */
 public class Dealer implements GameConstants {
 
+
+    /*----------------------------Methods for populating a board -------------------------*/
+
     /**
      * generates the bingo board for the player with random numbers generated
      *
@@ -91,8 +94,7 @@ public class Dealer implements GameConstants {
             space_numbers.add(id);
             if (i == 2) {
                 newBoard[2][2] = new Space(2, 2, id, true);
-            }
-            else {
+            } else {
                 newBoard[2][i] = new Space(2, i, id, false);
             }
         }
@@ -141,6 +143,7 @@ public class Dealer implements GameConstants {
         BoardGui gui = new BoardGui();
         gui.setUpBoard(populateBoard());
     }
+    /*--------------------------Methods for determining whether or not the board has bingo -----------*/
 
     /**
      * get all the spaces for the given row id
@@ -169,6 +172,66 @@ public class Dealer implements GameConstants {
         }
         return column;
     }
+
+    public boolean hasBingo(Space[][] board) {
+        boolean bingo = false;
+        //horizontal and vertical bingo
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            bingo = sectionHasBingo(getRow(i, board)) || sectionHasBingo(getColumn(i, board));
+            if (bingo) {
+                return true;
+            }
+        }
+            if (!bingo) {
+                Space[] firstDiagonal = new Space[5];
+                for (int i = 0; i < 5; i++) {
+                    firstDiagonal[i] = board[i][i];
+                }
+                bingo = allMarked(firstDiagonal);
+
+                if (!bingo) {
+                    Space[] secondDiagonal = new Space[5];
+                    for (int i = 0; i < 5; i++) {
+                        for (int j = 4; j >= 0; j--) {
+                            secondDiagonal[i] = board[i][j];
+                        }
+                    }
+                    bingo = allMarked(secondDiagonal);
+                }
+            }
+        return bingo;
+        }
+
+    public boolean allMarked(Space[] diagonal) {
+        boolean isAllMarked = false;
+        for (Space s : diagonal) {
+            isAllMarked = s.marked;
+        }
+        return isAllMarked;
+    }
+
+    /**
+     * checks if every spaced in marked in the particular section
+     *
+     * @param section the section, column or diagonal in question
+     * @return whether or not that section has bingo
+     */
+    public boolean sectionHasBingo(Space[] section) {
+        boolean hasBingo = false;
+        for (Space s : section) {
+            hasBingo = s.marked;
+            // as soon as there is an unmarked space, stop and return false
+            if (!hasBingo) {
+                break;
+            }
+        }
+        return hasBingo;
+    }
+
+
+
+
+    /*------------------------Drawing method ---------------------------------------------*/
 
     /**
      * generates random spaces possibly on the board
