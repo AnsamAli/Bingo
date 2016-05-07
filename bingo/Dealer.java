@@ -229,8 +229,6 @@ public class Dealer implements GameConstants {
     }
 
 
-
-
     /*------------------------Drawing method ---------------------------------------------*/
 
     /**
