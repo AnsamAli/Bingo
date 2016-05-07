@@ -2,6 +2,8 @@ package bingo;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * creates a gui representation of an individual players board
@@ -12,7 +14,9 @@ public class BoardGui extends JFrame {
     final int SIZE = 5;
     final int BUTTON_SIZE = 200;
     JButton bingoButton = new JButton();
+    JButton skipButton = new JButton("Skip");
     JButton[][] spaces = new JButton[SIZE][SIZE];
+    JLabel drawingLabel = new JLabel(dealer.drawing());
     JPanel boardPanel = new JPanel(new GridLayout(SIZE + 1, SIZE));
     JPanel drawingPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     JPanel bingoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -22,6 +26,14 @@ public class BoardGui extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(3, 1));
         setSize(GUI_SIZE, GUI_SIZE);
+        drawingPanel.add(drawingLabel); 
+        skipButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayNextDrawing();
+            }
+        });
+        drawingPanel.add(skipButton);
     }
 
     /**
@@ -41,8 +53,7 @@ public class BoardGui extends JFrame {
         for (int i = 0; i < SIZE; i++) {
             fillGuiRow(i, board, spaces);
         }
-        JLabel drawingLabel = new JLabel(dealer.drawing());
-        drawingPanel.add(drawingLabel, CENTER_ALIGNMENT);
+
         this.add(drawingPanel);
         this.add(boardPanel);
         this.add(bingoPanel);
@@ -60,30 +71,54 @@ public class BoardGui extends JFrame {
     public void fillGuiRow(int rowId, Space[][] board, JButton[][] btnBoard) {
         for (Space s : dealer.getRow(rowId, board)) {
             JButton spaceButton;
-                if (rowId == 2 && s.column == 2) {
-                    spaceButton = new JButton("FREE");
-                    //mark with red background or circle
-                }
-            else {
-                    spaceButton = new JButton(Integer.toString(s.id));
-                    btnBoard[s.column][rowId] = spaceButton;
-                }
-
-                boardPanel.add(spaceButton);
-                // onclick
-                if (spaceButton.isSelected()) {
-                    board[s.column][rowId].mark();
-                    markSpace(spaceButton);
-                }
+            if (rowId == 2 && s.column == 2) {
+                spaceButton = new JButton("FREE");
+                spaceButton.setForeground(Color.RED);
+            } else {
+                spaceButton = new JButton(Integer.toString(s.id));
+                btnBoard[s.column][rowId] = spaceButton;
             }
+
+            spaceButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    markSpace(spaceButton);
+                    displayNextDrawing();
+                }
+            });
+            boardPanel.add(spaceButton);
+
+
+        }
     }
 
+    /**
+     * marks the gui by changing the text color to red
+     *
+     * @param spaceButton the button that is marked
+     */
     public void markSpace(JButton spaceButton) {
-        spaceButton.setBackground(Color.RED);
+        spaceButton.setForeground(Color.RED);
         spaceButton.setOpaque(true);
         spaceButton.setContentAreaFilled(false);
+
+        spaceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                spaceButton.setForeground(Color.BLACK);
+                spaceButton.setOpaque(true);
+            }
+        });
+    }
+
+    /**
+     * updates the drawing everytime the player clicks skip or on a space
+     */
+    public void displayNextDrawing() {
+        drawingLabel.setText(dealer.drawing());
+        drawingPanel.add(drawingLabel, CENTER_ALIGNMENT);
+        this.add(drawingPanel);
     }
 
 
-    }
+}
 
