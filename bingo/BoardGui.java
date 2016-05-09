@@ -26,7 +26,7 @@ public class BoardGui extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(3, 1));
         setSize(GUI_SIZE, GUI_SIZE);
-        drawingPanel.add(drawingLabel); 
+        drawingPanel.add(drawingLabel);
         skipButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,6 +44,12 @@ public class BoardGui extends JFrame {
     public void setUpBoard(Space[][] board) {
         bingoButton.setText("I Have Bingo!");
         bingoButton.setSize(BUTTON_SIZE, BUTTON_SIZE);
+        bingoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dealer.checkForBingo(board);
+            }
+        });
         bingoPanel.add(bingoButton);
         boardPanel.add(new JLabel("\tB"));
         boardPanel.add(new JLabel("\tI"));
@@ -118,6 +124,8 @@ public class BoardGui extends JFrame {
         drawingPanel.add(drawingLabel, CENTER_ALIGNMENT);
         this.add(drawingPanel);
     }
+
+
 
 
 }

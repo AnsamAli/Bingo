@@ -143,4 +143,14 @@ public class DealerTest {
         }
         System.out.println();
     }
+
+    @Test
+    public void printBingoSection() {
+        setupHorizontalBingo();
+        System.out.println("Bingo Section!");
+        dealer.hasBingo(playerBoard);
+        for (Space s : dealer.bingoSection) {
+            System.out.println(s.toString());
+        }
+    }
 }

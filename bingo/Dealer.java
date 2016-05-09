@@ -9,6 +9,9 @@ import java.util.Random;
  */
 public class Dealer implements GameConstants {
 
+    ArrayList<String> drawings = new ArrayList<>();
+    public Space [] bingoSection = new Space[5];
+
 
     /*----------------------------Methods for populating a board -------------------------*/
 
@@ -225,7 +228,35 @@ public class Dealer implements GameConstants {
                 break;
             }
         }
+        //add the bingo section to the field
+        if (hasBingo) {
+            int i = 0;
+            for (Space s : section) {
+                bingoSection[i] = s;
+                i++;
+            }
+        }
         return hasBingo;
+    }
+
+    public boolean markedCorrectedSpaces() {
+        // get list of spaces in bingo row
+        // match it against drawings --> return true if they all match
+
+        return false;
+    }
+
+    /**
+     * handles cheaters and winners
+     * @param board the board being checked for bingo
+     */
+    public void checkForBingo(Space[][]board) {
+        if (hasBingo(board)) {
+
+        }
+        else {
+            /*CHEATER*/
+        }
     }
 
 
@@ -239,18 +270,20 @@ public class Dealer implements GameConstants {
     public String drawing() {
         Random random = new Random();
         int drawNumber = random.nextInt(O_MAX - B_MIN + 1) + B_MIN;
-
+        String drawingString = "";
         if (drawNumber < I_MIN) {
-            return "B" + Integer.toString(drawNumber);
+            drawingString = "B" + Integer.toString(drawNumber);
         } else if (drawNumber < N_MIN) {
-            return "I" + Integer.toString(drawNumber);
+            drawingString = "I" + Integer.toString(drawNumber);
         } else if (drawNumber < G_MIN) {
-            return "N" + Integer.toString(drawNumber);
+            drawingString = "N" + Integer.toString(drawNumber);
         } else if (drawNumber < O_MIN) {
-            return "G" + Integer.toString(drawNumber);
+            drawingString = "G" + Integer.toString(drawNumber);
         } else {
-            return "O" + Integer.toString(drawNumber);
+            drawingString = "O" + Integer.toString(drawNumber);
         }
+        drawings.add(drawingString);
+        return drawingString;
     }
 
 
