@@ -176,22 +176,28 @@ public class Dealer implements GameConstants {
         return column;
     }
 
+    /**
+     * Checks whether a board has bingo
+     * @param board the board of the player in question
+     * @return whether or not the board has bingo
+     */
     public boolean hasBingo(Space[][] board) {
         boolean bingo = false;
-        //horizontal and vertical bingo
+        // check for horizontal and vertical bingo
         for (int i = 0; i < BOARD_SIZE; i++) {
             bingo = sectionHasBingo(getRow(i, board)) || sectionHasBingo(getColumn(i, board));
             if (bingo) {
                 return true;
             }
         }
+            // check for forward bingo
             if (!bingo) {
                 Space[] firstDiagonal = new Space[5];
                 for (int i = 0; i < 5; i++) {
                     firstDiagonal[i] = board[i][i];
                 }
                 bingo = allMarked(firstDiagonal);
-
+                // check for backward bingo
                 if (!bingo) {
                     Space[] secondDiagonal = new Space[5];
                     for (int i = 0; i < 5; i++) {
@@ -205,29 +211,30 @@ public class Dealer implements GameConstants {
         return bingo;
         }
 
-    public boolean allMarked(Space[] diagonal) {
+
+
+    /**
+     * Checks that all the spaces in a section are marked
+     * @param section the row, column or diagonal in question
+     * @return whether or not the secton has bingo
+     */
+    public boolean allMarked(Space[] section) {
         boolean isAllMarked = false;
-        for (Space s : diagonal) {
+        for (Space s : section) {
             isAllMarked = s.marked;
         }
         return isAllMarked;
     }
 
     /**
-     * checks if every spaced in marked in the particular section
+     * Adds sets the section to the bingoSection field
      *
-     * @param section the section, column or diagonal in question
+     * @param section the row, column or diagonal in question
      * @return whether or not that section has bingo
      */
     public boolean sectionHasBingo(Space[] section) {
-        boolean hasBingo = false;
-        for (Space s : section) {
-            hasBingo = s.marked;
-            // as soon as there is an unmarked space, stop and return false
-            if (!hasBingo) {
-                break;
-            }
-        }
+        boolean hasBingo = allMarked(section);
+
         //add the bingo section to the field
         if (hasBingo) {
             int i = 0;
@@ -239,11 +246,18 @@ public class Dealer implements GameConstants {
         return hasBingo;
     }
 
+    /**
+     * Checks if the spaces in the bingo section matches cards
+     * in the drawings
+     * @return whether or not the marked spaces are correct
+     */
     public boolean markedCorrectedSpaces() {
-        // get list of spaces in bingo row
-        // match it against drawings --> return true if they all match
+        boolean isDrawing = false;
+        for (Space s : bingoSection) {
+            isDrawing = drawings.contains(s);
+        }
 
-        return false;
+        return isDrawing;
     }
 
     /**
@@ -251,8 +265,8 @@ public class Dealer implements GameConstants {
      * @param board the board being checked for bingo
      */
     public void checkForBingo(Space[][]board) {
-        if (hasBingo(board)) {
-
+        if (hasBingo(board) && markedCorrectedSpaces()) {
+            /* Winner message */
         }
         else {
             /*CHEATER*/
